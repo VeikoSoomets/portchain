@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet" th:href="@{/css/bootstrap.min.css}"/>
+    <link href="../static/css/style.css" rel="stylesheet" th:href="@{/css/style.css}"/>
+
+    <title>Portchain - Coding Challenge</title>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Portchain Challenge<span class="sr-only">(current)</span></a>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<main role="main">
+
+    <div class="container">
+        <h3>Top Five Ports With Most Arrivals</h3>
+        <table class="table table-striped table-sm">
+            <thead>
+                <tr>
+                    <th scope="col">Port name</th>
+                    <th scope="col">Nr of Arrivals</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="portWithArrival: ${result.topFivePortsWithMostArrivals.portsWithArrivals}">
+                    <td scope="row" th:text="${portWithArrival.port.name}"></td>
+                    <td th:text="${#lists.size(portWithArrival.arrivals)}"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <h3>Top Five Ports With Fewest port calls</h3>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Port name</th>
+                <th scope="col">Nr of Port calls</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="portWithPortCall: ${result.topFivePortsWithFewestPortCalls.portsWithPortCalls}">
+                <td scope="row" th:text="${portWithPortCall.port.name}"></td>
+                <td th:text="${#lists.size(portWithPortCall.portCalls)}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <h3>5th, 20th, 50th, 75th and 90th percentiles of port call durations</h3>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Port name</th>
+                <th scope="col">5th percentile</th>
+                <th scope="col">20th percentile</th>
+                <th scope="col">50th percentile</th>
+                <th scope="col">75th percentile</th>
+                <th scope="col">90th percentile</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="portWithPercentiles: ${result.portCallDurationPercentiles.portsWithPercentiles}">
+                <td scope="row" th:text="${portWithPercentiles.port.name}"></td>
+                <td th:text="${{portWithPercentiles.percentiles[0]}}"></td>
+                <td th:text="${{portWithPercentiles.percentiles[1]}}"></td>
+                <td th:text="${{portWithPercentiles.percentiles[2]}}"></td>
+                <td th:text="${{portWithPercentiles.percentiles[3]}}"></td>
+                <td th:text="${{portWithPercentiles.percentiles[4]}}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <h3>5th, 50th and 80th percentiles of vessel 2-day delays</h3>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Port name</th>
+                <th scope="col">5th percentile</th>
+                <th scope="col">50th percentile</th>
+                <th scope="col">80th percentile</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vesselWithPercentiles: ${result.twoDayVesselDelayPercentiles.vesselsWithPercentiles}">
+                <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
+                <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
+                <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
+                <td th:text="${{vesselWithPercentiles.percentiles[2]}}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <h3>5th, 50th and 80th percentiles of vessel 7-day delays</h3>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Port name</th>
+                <th scope="col">5th percentile</th>
+                <th scope="col">50th percentile</th>
+                <th scope="col">80th percentile</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vesselWithPercentiles: ${result.sevenDayVesselDelayPercentiles.vesselsWithPercentiles}">
+                <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
+                <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
+                <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
+                <td th:text="${{vesselWithPercentiles.percentiles[2]}}"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br/>
+
+        <h3>5th, 50th and 80th percentiles of vessel 14-day delays</h3>
+        <table class="table table-striped table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Port name</th>
+                <th scope="col">5th percentile</th>
+                <th scope="col">50th percentile</th>
+                <th scope="col">80th percentile</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="vesselWithPercentiles: ${result.fourteenDayVesselDelayPercentiles.vesselsWithPercentiles}">
+                <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
+                <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
+                <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
+                <td th:text="${{vesselWithPercentiles.percentiles[2]}}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+</main>
+</body>
+</html>
