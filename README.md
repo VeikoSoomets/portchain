@@ -22,4 +22,4 @@ Start up embedded tomcat in spring boot with command
 ```
 
 ## Usage
-- Go to default backend url: http://localhost:8080
+Go to default backend url: http://localhost:8080
