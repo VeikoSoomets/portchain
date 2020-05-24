@@ -13,7 +13,7 @@ This project was done as a test work for Portchain coding challenge
 
 Using gradle wrapper let's install java dependencies
 ``` 
-./gradlew --refresh-dependencies**
+./gradlew --refresh-dependencies
 ```
 
 Start up embedded tomcat in spring boot with command 
