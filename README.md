@@ -4,7 +4,7 @@ This project was done as a test work for Portchain coding challenge
 
 ## Stack
 
-- **Java 11**
+- **Java 14**
 - **Java Spring Boot 2.3**
 - **Gradle**
 - **Thymeleaf**
