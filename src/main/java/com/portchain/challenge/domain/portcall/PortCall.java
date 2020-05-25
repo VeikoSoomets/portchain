@@ -60,4 +60,9 @@ public class PortCall {
     private int dateDifferenceInDays(ZonedDateTime date1, ZonedDateTime date2) {
         return (int) abs(ChronoUnit.DAYS.between(date1, date2));
     }
+
+    @Override
+    public String toString() {
+        return "Arrival: " + arrival.toLocalDateTime().toString() + ". Departure: " + departure.toLocalDateTime().toString();
+    }
 }

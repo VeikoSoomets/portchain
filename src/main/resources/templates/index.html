@@ -10,146 +10,169 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
-    <div class="collapse navbar-collapse" id="navbarsExampleDefault">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-                <a class="nav-link" href="#">Portchain Challenge<span class="sr-only">(current)</span></a>
-            </li>
-        </ul>
-    </div>
-</nav>
+    <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+        <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Portchain Challenge<span class="sr-only">(current)</span></a>
+                </li>
+            </ul>
+        </div>
+    </nav>
 
-<main role="main">
+    <main role="main">
+        <div class="container">
+            <h3>Top Five Ports With Most Arrivals</h3>
+            <table class="table table-striped table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Port name</th>
+                        <th scope="col">Nr of Arrivals</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="portWithArrival: ${result.topFivePortsWithMostArrivals.portsWithArrivals}" data-toggle="modal" data-target="#dataModal" data-title="Arrivals" th:data-content="${portWithArrival.arrivals}">
+                        <td scope="row" th:text="${portWithArrival.port.name}"></td>
+                        <td th:text="${#lists.size(portWithArrival.arrivals)}"></td>
+                    </tr>
+                </tbody>
+            </table>
 
-    <div class="container">
-        <h3>Top Five Ports With Most Arrivals</h3>
-        <table class="table table-striped table-sm">
-            <thead>
+            <br/>
+
+            <h3>Top Five Ports With Fewest port calls</h3>
+            <table class="table table-striped table-sm">
+                <thead>
                 <tr>
                     <th scope="col">Port name</th>
-                    <th scope="col">Nr of Arrivals</th>
+                    <th scope="col">Nr of Port calls</th>
                 </tr>
-            </thead>
-            <tbody>
-                <tr th:each="portWithArrival: ${result.topFivePortsWithMostArrivals.portsWithArrivals}">
-                    <td scope="row" th:text="${portWithArrival.port.name}"></td>
-                    <td th:text="${#lists.size(portWithArrival.arrivals)}"></td>
+                </thead>
+                <tbody>
+                <tr th:each="portWithPortCall: ${result.topFivePortsWithFewestPortCalls.portsWithPortCalls}" data-toggle="modal" data-target="#dataModal" data-title="Port calls" th:data-content="${portWithPortCall.portCalls}">
+                    <td scope="row" th:text="${portWithPortCall.port.name}"></td>
+                    <td th:text="${#lists.size(portWithPortCall.portCalls)}"></td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
 
-        <br/>
+            <br/>
 
-        <h3>Top Five Ports With Fewest port calls</h3>
-        <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-                <th scope="col">Port name</th>
-                <th scope="col">Nr of Port calls</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="portWithPortCall: ${result.topFivePortsWithFewestPortCalls.portsWithPortCalls}">
-                <td scope="row" th:text="${portWithPortCall.port.name}"></td>
-                <td th:text="${#lists.size(portWithPortCall.portCalls)}"></td>
-            </tr>
-            </tbody>
-        </table>
+            <h3>5th, 20th, 50th, 75th and 90th percentiles of port call durations</h3>
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Port name</th>
+                    <th scope="col">5th percentile</th>
+                    <th scope="col">20th percentile</th>
+                    <th scope="col">50th percentile</th>
+                    <th scope="col">75th percentile</th>
+                    <th scope="col">90th percentile</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="portWithPercentiles: ${result.portCallDurationPercentiles.portsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentiles (in minutes)" th:data-content="${portWithPercentiles.values}">
+                    <td scope="row" th:text="${portWithPercentiles.port.name}"></td>
+                    <td th:text="${{portWithPercentiles.percentiles[0]}}"></td>
+                    <td th:text="${{portWithPercentiles.percentiles[1]}}"></td>
+                    <td th:text="${{portWithPercentiles.percentiles[2]}}"></td>
+                    <td th:text="${{portWithPercentiles.percentiles[3]}}"></td>
+                    <td th:text="${{portWithPercentiles.percentiles[4]}}"></td>
+                </tr>
+                </tbody>
+            </table>
 
-        <br/>
+            <br/>
 
-        <h3>5th, 20th, 50th, 75th and 90th percentiles of port call durations</h3>
-        <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-                <th scope="col">Port name</th>
-                <th scope="col">5th percentile</th>
-                <th scope="col">20th percentile</th>
-                <th scope="col">50th percentile</th>
-                <th scope="col">75th percentile</th>
-                <th scope="col">90th percentile</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="portWithPercentiles: ${result.portCallDurationPercentiles.portsWithPercentiles}">
-                <td scope="row" th:text="${portWithPercentiles.port.name}"></td>
-                <td th:text="${{portWithPercentiles.percentiles[0]}}"></td>
-                <td th:text="${{portWithPercentiles.percentiles[1]}}"></td>
-                <td th:text="${{portWithPercentiles.percentiles[2]}}"></td>
-                <td th:text="${{portWithPercentiles.percentiles[3]}}"></td>
-                <td th:text="${{portWithPercentiles.percentiles[4]}}"></td>
-            </tr>
-            </tbody>
-        </table>
+            <h3>5th, 50th and 80th percentiles of vessel 2-day delays</h3>
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Port name</th>
+                    <th scope="col">5th percentile</th>
+                    <th scope="col">50th percentile</th>
+                    <th scope="col">80th percentile</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="vesselWithPercentiles: ${result.twoDayVesselDelayPercentiles.vesselsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentiles (in minutes)" th:data-content="${vesselWithPercentiles.values}">
+                    <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
+                    <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
+                    <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
+                    <td th:text="${{vesselWithPercentiles.percentiles[2]}}"></td>
+                </tr>
+                </tbody>
+            </table>
 
-        <br/>
+            <br/>
 
-        <h3>5th, 50th and 80th percentiles of vessel 2-day delays</h3>
-        <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-                <th scope="col">Port name</th>
-                <th scope="col">5th percentile</th>
-                <th scope="col">50th percentile</th>
-                <th scope="col">80th percentile</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="vesselWithPercentiles: ${result.twoDayVesselDelayPercentiles.vesselsWithPercentiles}">
-                <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
-                <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
-                <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
-                <td th:text="${{vesselWithPercentiles.percentiles[2]}}"></td>
-            </tr>
-            </tbody>
-        </table>
+            <h3>5th, 50th and 80th percentiles of vessel 7-day delays</h3>
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Port name</th>
+                    <th scope="col">5th percentile</th>
+                    <th scope="col">50th percentile</th>
+                    <th scope="col">80th percentile</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="vesselWithPercentiles: ${result.sevenDayVesselDelayPercentiles.vesselsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentiles (in minutes)" th:data-content="${vesselWithPercentiles.values}">
+                    <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
+                    <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
+                    <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
+                    <td th:text="${{vesselWithPercentiles.percentiles[2]}}"></td>
+                </tr>
+                </tbody>
+            </table>
 
-        <br/>
+            <br/>
 
-        <h3>5th, 50th and 80th percentiles of vessel 7-day delays</h3>
-        <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-                <th scope="col">Port name</th>
-                <th scope="col">5th percentile</th>
-                <th scope="col">50th percentile</th>
-                <th scope="col">80th percentile</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="vesselWithPercentiles: ${result.sevenDayVesselDelayPercentiles.vesselsWithPercentiles}">
-                <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
-                <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
-                <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
-                <td th:text="${{vesselWithPercentiles.percentiles[2]}}"></td>
-            </tr>
-            </tbody>
-        </table>
+            <h3>5th, 50th and 80th percentiles of vessel 14-day delays</h3>
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th scope="col">Port name</th>
+                    <th scope="col">5th percentile</th>
+                    <th scope="col">50th percentile</th>
+                    <th scope="col">80th percentile</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="vesselWithPercentiles: ${result.fourteenDayVesselDelayPercentiles.vesselsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentiles (in minutes)" th:data-content="${vesselWithPercentiles.values}">
+                    <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
+                    <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
+                    <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
+                    <td th:text="${{vesselWithPercentiles.percentiles[2]}}"></td>
+                </tr>
+                </tbody>
+            </table>
 
-        <br/>
+            <!-- Modal -->
+            <div class="modal fade" id="dataModal" tabindex="-1" role="dialog" aria-labelledby="dataModalTitle" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="dataModalLongTitle">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
 
-        <h3>5th, 50th and 80th percentiles of vessel 14-day delays</h3>
-        <table class="table table-striped table-sm">
-            <thead>
-            <tr>
-                <th scope="col">Port name</th>
-                <th scope="col">5th percentile</th>
-                <th scope="col">50th percentile</th>
-                <th scope="col">80th percentile</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr th:each="vesselWithPercentiles: ${result.fourteenDayVesselDelayPercentiles.vesselsWithPercentiles}">
-                <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
-                <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
-                <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
-                <td th:text="${{vesselWithPercentiles.percentiles[2]}}"></td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-
-</main>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script th:src="@{/js/bootstrap.min.js}"></script>
+    <script th:src="@{/js/script.js}"></script>
 </body>
 </html>

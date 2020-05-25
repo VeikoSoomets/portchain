@@ -35,6 +35,7 @@ public class PortCallDurationPercentiles {
                 .map(PortCall::getDuration)
                 .sorted()
                 .collect(Collectors.toList());
+        portWithPercentiles.setValues(durations);
 
         for (Percentile percentile : portWithPercentiles.getPercentiles()) {
             percentile.calculateValue(durations);
