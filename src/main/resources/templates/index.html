@@ -71,7 +71,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="portWithPercentiles: ${result.portCallDurationPercentiles.portsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentiles (in minutes)" th:data-content="${portWithPercentiles.values}">
+                <tr th:each="portWithPercentiles: ${result.portCallDurationPercentiles.portsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentile values (in minutes)" th:data-content="${portWithPercentiles.values}">
                     <td scope="row" th:text="${portWithPercentiles.port.name}"></td>
                     <td th:text="${{portWithPercentiles.percentiles[0]}}"></td>
                     <td th:text="${{portWithPercentiles.percentiles[1]}}"></td>
@@ -95,7 +95,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="vesselWithPercentiles: ${result.twoDayVesselDelayPercentiles.vesselsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentiles (in minutes)" th:data-content="${vesselWithPercentiles.values}">
+                <tr th:each="vesselWithPercentiles: ${result.twoDayVesselDelayPercentiles.vesselsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentile values (in minutes)" th:data-content="${vesselWithPercentiles.values}">
                     <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
                     <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
                     <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
@@ -117,7 +117,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="vesselWithPercentiles: ${result.sevenDayVesselDelayPercentiles.vesselsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentiles (in minutes)" th:data-content="${vesselWithPercentiles.values}">
+                <tr th:each="vesselWithPercentiles: ${result.sevenDayVesselDelayPercentiles.vesselsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentile values (in minutes)" th:data-content="${vesselWithPercentiles.values}">
                     <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
                     <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
                     <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>
@@ -139,7 +139,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <tr th:each="vesselWithPercentiles: ${result.fourteenDayVesselDelayPercentiles.vesselsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentiles (in minutes)" th:data-content="${vesselWithPercentiles.values}">
+                <tr th:each="vesselWithPercentiles: ${result.fourteenDayVesselDelayPercentiles.vesselsWithPercentiles}" data-toggle="modal" data-target="#dataModal" data-title="Percentile values (in minutes)" th:data-content="${vesselWithPercentiles.values}">
                     <td scope="row" th:text="${vesselWithPercentiles.vessel.name}"></td>
                     <td th:text="${{vesselWithPercentiles.percentiles[0]}}"></td>
                     <td th:text="${{vesselWithPercentiles.percentiles[1]}}"></td>

@@ -10,10 +10,10 @@ import java.time.ZonedDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-// TODO: Create test data for departures as well!!
 public class DataInitializer {
 
-    public static List<Vessel> getVessels() {
+    // TODO: Create test data for departures as well!!
+    /*public static List<Vessel> getVessels() {
         List<Vessel> vessels = new ArrayList<>();
         Vessel vessel1 = new Vessel(12345, "Vessel1");
         Vessel vessel2 = new Vessel(23456, "Vessel2");
@@ -81,16 +81,67 @@ public class DataInitializer {
         vessels.add(vessel3);
 
         return vessels;
+    }*/
+
+    public static List<Vessel> getVessels() {
+        return new ArrayList<>() {{
+            add(new Vessel(12345, "Vessel1"));
+            add(new Vessel(23456, "Vessel2"));
+            add(new Vessel(34567, "Vessel3"));
+            add(new Vessel(45678, "Vessel4"));
+            add(new Vessel(56789, "Vessel5"));
+        }};
     }
 
-    private static void addPortCallToVessel(Vessel vessel, Port port, ZonedDateTime arrival, ZonedDateTime departure, boolean isOmitted) {
+    public static List<Port> getPorts() {
+        return new ArrayList<>() {{
+            add(new Port("123", "Port1"));
+            add(new Port("234", "Port2"));
+            add(new Port("345", "Port3"));
+            add(new Port("456", "Port4"));
+            add(new Port("567", "Port5"));
+            add(new Port("678", "Port6"));
+            add(new Port("789", "Port7"));
+            add(new Port("8910", "Port8"));
+            add(new Port("91011", "Port9"));
+            add(new Port("101112", "Port10"));
+        }};
+    }
+
+    public static void initializeVesselsWithPortCalls(List<Vessel> vessels, List<Port> ports, int[] nrOfPortCallsForEachPort,
+                                                      ZonedDateTime arrival, ZonedDateTime departure) {
+        for (int i = 0; i < ports.size(); i++) {
+            Port port = ports.get(i);
+            int nrOfPortsCalls = nrOfPortCallsForEachPort[i];
+
+            for(int j = 0; j < nrOfPortsCalls; j++) {
+                Vessel vessel = vessels.get(0 % vessels.size());
+                DataInitializer.addPortCallToVessel(vessel, port, arrival, departure, false);
+            }
+        }
+    }
+
+    public static void initializeVesselsWithOmittedPortCalls(List<Vessel> vessels, List<Port> ports, int[] nrOfOmittedPortCallsForEachPort,
+                                                             ZonedDateTime arrival, ZonedDateTime departure) {
+        for (int i = 0; i < ports.size(); i++) {
+            Port port = ports.get(i);
+            int nrOfPortsCalls = nrOfOmittedPortCallsForEachPort[i];
+
+            for(int j = 0; j < nrOfPortsCalls; j++) {
+                Vessel vessel = vessels.get(0 % vessels.size());
+                DataInitializer.addPortCallToVessel(vessel, port, arrival, departure, true);
+            }
+        }
+    }
+
+    public static void addPortCallToVessel(Vessel vessel, Port port, ZonedDateTime arrival, ZonedDateTime departure, boolean isOmitted) {
         PortCall portCall = new PortCall(arrival, departure);
         portCall.setPort(port);
         portCall.setOmitted(isOmitted);
         vessel.getPortCalls().add(portCall);
     }
 
-    private static void addLogEntryToPortCall(PortCall portCall, UpdatedField updatedField, ZonedDateTime createdDate, ZonedDateTime arrival) {
+    public static void addLogEntryToPortCall(PortCall portCall, UpdatedField updatedField, ZonedDateTime createdDate, ZonedDateTime arrival) {
         LogEntry logEntry = new LogEntry();
         logEntry.setUpdatedField(updatedField);
         logEntry.setArrival(arrival);

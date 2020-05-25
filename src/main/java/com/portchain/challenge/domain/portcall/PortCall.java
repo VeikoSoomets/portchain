@@ -38,7 +38,8 @@ public class PortCall {
         LogEntry foreCastLogEntry = null;
         for (LogEntry logEntry : logEntries) {
             if (logEntry.getCreatedDate().isBefore(arrival)
-                    && dateDifferenceInDays(logEntry.getCreatedDate(), arrival) >= delayedDays) {
+                    && dateDifferenceInDays(logEntry.getCreatedDate(), arrival) >= delayedDays
+                    && logEntry.getArrival() != null) {
 
                 if (foreCastLogEntry == null
                         || dateDifferenceInMinutes(foreCastLogEntry.getCreatedDate(), arrival) > dateDifferenceInMinutes(logEntry.getCreatedDate(), arrival))
@@ -46,7 +47,7 @@ public class PortCall {
             }
         }
 
-        if (foreCastLogEntry == null || foreCastLogEntry.getArrival() == null) {
+        if (foreCastLogEntry == null) {
             return null;
         }
 

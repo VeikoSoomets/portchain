@@ -1,6 +1,8 @@
 package com.portchain.challenge.domain.task;
 
-import com.portchain.challenge.domain.task.percentiles.delay.VesselDelayPercentilesTask;
+import com.portchain.challenge.domain.task.percentiles.delay.VesselFourteenDayDelayPercentilesTask;
+import com.portchain.challenge.domain.task.percentiles.delay.VesselSevenDayDelayPercentilesTask;
+import com.portchain.challenge.domain.task.percentiles.delay.VesselTwoDayDelayPercentilesTask;
 import com.portchain.challenge.domain.task.percentiles.duration.PortCallDurationPercentilesTask;
 import com.portchain.challenge.domain.task.topfive.fewest.portcalls.TopFivePortsWithFewestPortCallsTask;
 import com.portchain.challenge.domain.task.topfive.most.arrivals.TopFivePortsWithMostArrivalsTask;
@@ -25,9 +27,9 @@ public class TaskService {
         result.setTopFivePortsWithMostArrivals(new TopFivePortsWithMostArrivalsTask().find(vessels));
         result.setTopFivePortsWithFewestPortCalls(new TopFivePortsWithFewestPortCallsTask().find(vessels));
         result.setPortCallDurationPercentiles(new PortCallDurationPercentilesTask().find(vessels));
-        result.setTwoDayVesselDelayPercentiles(new VesselDelayPercentilesTask().find(vessels));
-        result.setSevenDayVesselDelayPercentiles(new VesselDelayPercentilesTask().find(vessels));
-        result.setFourteenDayVesselDelayPercentiles(new VesselDelayPercentilesTask().find(vessels));
+        result.setTwoDayVesselDelayPercentiles(new VesselTwoDayDelayPercentilesTask().find(vessels));
+        result.setSevenDayVesselDelayPercentiles(new VesselSevenDayDelayPercentilesTask().find(vessels));
+        result.setFourteenDayVesselDelayPercentiles(new VesselFourteenDayDelayPercentilesTask().find(vessels));
         return result;
     }
 }

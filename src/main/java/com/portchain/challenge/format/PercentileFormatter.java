@@ -19,6 +19,6 @@ public class PercentileFormatter implements Formatter<Percentile> {
     @Override
     public String print(Percentile percentile, Locale locale) {
         Duration duration = Duration.ofHours(percentile.getValue() / 60).plusMinutes(percentile.getValue() % 60);
-        return duration.toHours() + ":" + duration.toMinutesPart();
+        return duration.toHours() + "h:" + duration.toMinutesPart() + "m (" + percentile.getValue() + "m)";
     }
 }
