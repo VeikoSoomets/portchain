@@ -1,6 +1,7 @@
 package com.portchain.challenge.domain.portcall;
 
 import com.portchain.challenge.domain.logentry.LogEntry;
+import com.portchain.challenge.domain.logentry.UpdatedField;
 import com.portchain.challenge.domain.port.Port;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,7 +10,9 @@ import lombok.Setter;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 import static java.lang.Math.abs;
 
@@ -31,34 +34,33 @@ public class PortCall {
     }
 
     public int getDuration() {
-        return dateDifferenceInMinutes(arrival, departure);
+        if (arrival != null && departure != null) {
+            return differenceInMinutes(arrival, departure);
+        }
+        return 0;
     }
 
     public Integer getDelay(int delayedDays) {
-        LogEntry foreCastLogEntry = null;
-        for (LogEntry logEntry : logEntries) {
-            if (logEntry.getCreatedDate().isBefore(arrival)
-                    && dateDifferenceInDays(logEntry.getCreatedDate(), arrival) >= delayedDays
-                    && logEntry.getArrival() != null) {
+        Optional<LogEntry> foreCastLogEntry = logEntries
+                .stream()
+                .filter(logEntry -> logEntry.getUpdatedField().equals(UpdatedField.ARRIVAL)
+                        && logEntry.getCreatedDate().isBefore(arrival)
+                        && logEntry.getArrival() != null
+                        && differenceInDays(logEntry.getCreatedDate(), arrival) >= delayedDays)
+                .min(Comparator.comparing(logEntry -> differenceInMinutes(logEntry.getCreatedDate(), arrival)));
 
-                if (foreCastLogEntry == null
-                        || dateDifferenceInMinutes(foreCastLogEntry.getCreatedDate(), arrival) > dateDifferenceInMinutes(logEntry.getCreatedDate(), arrival))
-                foreCastLogEntry = logEntry;
-            }
+        if (foreCastLogEntry.isPresent()) {
+            return differenceInMinutes(arrival, foreCastLogEntry.get().getArrival());
         }
 
-        if (foreCastLogEntry == null) {
-            return null;
-        }
-
-        return dateDifferenceInMinutes(arrival, foreCastLogEntry.getArrival());
+        return null;
     }
 
-    private int dateDifferenceInMinutes(ZonedDateTime date1, ZonedDateTime date2) {
+    private int differenceInMinutes(ZonedDateTime date1, ZonedDateTime date2) {
         return (int) abs(ChronoUnit.MINUTES.between(date1, date2));
     }
 
-    private int dateDifferenceInDays(ZonedDateTime date1, ZonedDateTime date2) {
+    private int differenceInDays(ZonedDateTime date1, ZonedDateTime date2) {
         return (int) abs(ChronoUnit.DAYS.between(date1, date2));
     }
 

@@ -33,12 +33,15 @@ public class PortCallDurationPercentiles {
         List<Integer> durations = portCalls
                 .stream()
                 .map(PortCall::getDuration)
+                .filter(duration -> duration != 0)
                 .sorted()
                 .collect(Collectors.toList());
         portWithPercentiles.setValues(durations);
 
-        for (Percentile percentile : portWithPercentiles.getPercentiles()) {
-            percentile.calculateValue(durations);
+        if (durations.size() > 0) {
+            for (Percentile percentile : portWithPercentiles.getPercentiles()) {
+                percentile.calculateValue(durations);
+            }
         }
     }
 }
